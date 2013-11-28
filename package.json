@@ -1,0 +1,24 @@
+{
+  "name": "tweet_bot",
+  "version": "0.0.1",
+  "description": "Tweet Bot",
+  "dependencies": {
+    "socket.io" : "latest",
+    "express"   : "latest",
+    "jade"      : "latest",
+    "nodemon"   : "latest",
+    "underscore" : "latest",
+    "shortid"   : "latest",
+    "express-namespace" : "latest",
+    "twit" : "latest",
+    "request" : "latest",
+    "node-schedule" : "latest"
+  },
+  "contributors" : [
+    {
+      "name" : "Deepak",
+      "github" : "http://github.com/deepakvenkat"
+    }
+  ]
+
+}
