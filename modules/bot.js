@@ -1,3 +1,5 @@
+var twit = require('twitter');
+
 var Bot = module.exports = function (config) {
   this.twit = new Twit(config);
 }
