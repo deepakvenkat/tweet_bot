@@ -12,7 +12,8 @@
     "express-namespace" : "latest",
     "twit" : "latest",
     "request" : "latest",
-    "node-schedule" : "latest"
+    "node-schedule" : "latest",
+    "unirest" : "latest"
   },
   "contributors" : [
     {
