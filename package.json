@@ -13,7 +13,8 @@
     "twit" : "latest",
     "request" : "latest",
     "node-schedule" : "latest",
-    "unirest" : "latest"
+    "unirest" : "latest",
+    "cheerio" : "latest"
   },
   "contributors" : [
     {
