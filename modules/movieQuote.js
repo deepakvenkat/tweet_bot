@@ -1,29 +1,49 @@
 var fs = require('fs')
-var WikiQuote = require('./WikiQuote');
+var unirest = require('unirest');
 
-var MovieQuote = module.exports = function () {
+var totalTries = 0;
 
-  this.findQuote = function () {
-    console.log("find quote");
-    var movie = this.pickRandomMovie();
-    movie = this.formatMovie(movie);
-  };
+findQuote = function () {
+  var movieTitile = pickRandomMovie();
+  getWikiQuote(movieTitile);
+};
 
-  this.pickRandomMovie = function () {
-    fs.readFile('../data/top250.list', function (err, data) {
-      if (err) throw err;
-      var movies = data.toString().split('\n');
-      var random = this.randomNumber(0, (movies.length - 1));
-      var movie = movies[random];
-      return movie;
-    });
-  };
+pickRandomMovie = function () {
+  var movieList = fs.readFileSync('../data/top250.list', 'utf8');
+  var movies = movieList.toString().split('\n');
+  var random = randomNumber(0, (movies.length - 1));
+  var movie = movies[random];
+  movieTitle =  formatMovie(movie);
+  console.log(movieTitle);
+  return movieTitle;
+};
 
-  this.formatMovie = function (movie) {
-    return movie.replace(/\(.*\)/i, "").trim().replace(/[^\w\s]/g, "").replace(/\s+/g, "_")
-  };
+formatMovie = function (movie) {
+  return movie.replace(/\(.*\)/i, "").trim().replace(/[^\w\s]/g, "").replace(/\s+/g, "_")
+};
 
-  this.randomNumber = function (max, min) {
-    return Math.floor(Math.random() * (max - min ) + min);
-  };
-}
+randomNumber = function (max, min) {
+  return Math.floor(Math.random() * (max - min ) + min);
+};
+
+getWikiQuote = function (movieName) {
+  var wikiQuoteUrl = "http://en.wikiquote.org/w/api.php?format=json&action=parse&page=" + movieName;
+  totalTries++;
+  unirest.get(wikiQuoteUrl)
+  .headers({'Accept' : 'application/json'})
+  .end(processWikiResponse);
+};
+
+processWikiResponse = function (response) {
+  console.log(response.body);
+};
+
+
+module.exports = {
+  findQuote : findQuote,
+  pickRandomMovie : pickRandomMovie,
+  formatMovie : formatMovie,
+  randomNumber : randomNumber,
+  getWikiQuote : getWikiQuote,
+  processWikiResponse : processWikiResponse
+};
