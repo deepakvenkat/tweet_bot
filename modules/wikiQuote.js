@@ -6,13 +6,14 @@ var WikiQuote = module.exports = function (response) {
   this.page = "";
 
   this.isValidResponse = function () {
-    if (!!reponse.error) {
+    if (!!this.response.error) {
       return false;
     } else {
-      this.page = cheerio.load(response.body['text']['*']);
+      this.page = cheerio.load(response['parse']['text']['*']);
       var disambig = this.page(':contains(disambiguation)');
       if (disambig.length > 0)
         return false;
+      disambig = this.page(':contains(REDIRECT)')
     }
     return true;
   };

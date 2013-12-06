@@ -1,6 +1,6 @@
 var fs = require('fs')
 var unirest = require('unirest');
-var WikiQuote = require('wikiQuote');
+var WikiQuote = require('./wikiQuote');
 var totalTries = 0;
 
 findQuote = function () {
@@ -27,7 +27,7 @@ randomNumber = function (max, min) {
 };
 
 getWikiQuote = function (movieName) {
-  var wikiQuoteUrl = "http: //en.wikiquote.org/w/api.php?format=json&action=parse&page=" + movieName;
+  var wikiQuoteUrl = "http://en.wikiquote.org/w/api.php?format=json&action=parse&page=" + movieName;
   totalTries++;
   unirest.get(wikiQuoteUrl)
   .headers({'Accept' : 'application/json'})
@@ -35,6 +35,7 @@ getWikiQuote = function (movieName) {
 };
 
 processWikiResponse = function (response) {
+  console.log(response)
   var wikiQuote = new WikiQuote(response.body);
   var valid = wikiQuote.isValidResponse();
   if (!valid && totalTries < 4) {
