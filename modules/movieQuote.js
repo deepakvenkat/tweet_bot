@@ -43,9 +43,7 @@ processWikiResponse = function (response) {
   } else if (!valid && totalTries > 3){
     return false;
   } else {
-    wikiQuote.processResponse(function (quote) {
-      console.log(quote);
-    });
+    var quote = wikiQuote.processResponse();
     return true;
   }
 };
