@@ -6,7 +6,7 @@ var WikiQuote = module.exports = function(response) {
   this.page = "";
 
   this.isValidResponse = function() {
-    if ( !! this.response.error) {
+    if (!!this.response.error) {
       return false;
     } else {
       this.page = cheerio.load(response['parse']['text']['*']);

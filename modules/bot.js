@@ -5,7 +5,11 @@ var Bot = module.exports = function (config) {
   this.twit = new Twit(config);
 
   this.tweetJob = function () {
-    movieQuote.findQuote();
+    movieQuote.findQuote(translateQuote);
+  };
+
+  this.translateQuote = function () {
+
   };
 }
 

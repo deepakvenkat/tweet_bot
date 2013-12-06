@@ -1,10 +1,10 @@
-var fs = require('fs')
+var fs = require('fs');
 var unirest = require('unirest');
 var WikiQuote = require('./wikiQuote');
 var totalTries = 0;
 
-findQuote = function () {
-  var movieTitile = pickRandomMovie();
+findQuote = function (callback) {
+  var movieTitle = pickRandomMovie();
   getWikiQuote(movieTitile);
 };
 
@@ -19,7 +19,7 @@ pickRandomMovie = function () {
 };
 
 formatMovie = function (movie) {
-  return movie.replace(/\(.*\)/i, "").trim().replace(/[^\w\s]/g, "").replace(/\s+/g, "_")
+  return movie.replace(/\(.*\)/i, "").trim().replace(/[^\w\s]/g, "").replace(/\s+/g, "_");
 };
 
 randomNumber = function (max, min) {
@@ -35,7 +35,6 @@ getWikiQuote = function (movieName) {
 };
 
 processWikiResponse = function (response) {
-  console.log(response)
   var wikiQuote = new WikiQuote(response.body);
   var valid = wikiQuote.isValidResponse();
   if (!valid && totalTries < 4) {
