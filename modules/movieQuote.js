@@ -5,6 +5,8 @@ var totalTries = 0;
 
 findQuote = function (callback) {
   var movieTitle = pickRandomMovie();
+  this.movieTitle = movieTitle;
+  this.callback = callback;
   getWikiQuote(movieTitile);
 };
 
@@ -43,15 +45,15 @@ processWikiResponse = function (response) {
     return false;
   } else {
     var quote = wikiQuote.processResponse();
-    return true;
+    return this.callback(quote);
   }
 };
 
-module.exports = {
-  findQuote : findQuote,
-  pickRandomMovie : pickRandomMovie,
-  formatMovie : formatMovie,
-  randomNumber : randomNumber,
-  getWikiQuote : getWikiQuote,
-  processWikiResponse : processWikiResponse
+module.exports = function () {
+  this.findQuote = findQuote;
+  this.pickRandomMovie = pickRandomMovie;
+  this.formatMovie = formatMovie;
+  this.randomNumber = randomNumber;
+  this.getWikiQuote = getWikiQuote;
+  this.processWikiResponse = processWikiResponse;
 };
