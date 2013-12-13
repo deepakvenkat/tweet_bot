@@ -18,7 +18,7 @@ var WikiQuote = module.exports = function(response) {
     return true;
   };
 
-  this.processresponse = function() {
+  this.processResponse = function() {
     var $ = cheerio.load(this.page);
     var toc = $('.toctext');
     var ids = [];

@@ -7,7 +7,7 @@ var Bot = module.exports = function (config) {
   this.movieQuote = new MovieQuote();
 
   this.tweetJob = function () {
-    this.movieQuote.findQuote(translateQuote);
+    this.movieQuote.findQuote(this.translateQuote);
   };
 
   this.translateQuote = function (quote) {
@@ -15,6 +15,12 @@ var Bot = module.exports = function (config) {
   };
 
   this.tweetQuote = function (tweet) {
-    this.twit.tweet(tweet, function (err, reply))
+    if (tweet.lenghth > 140) {
+      console.log("too long");
+    }
+    this.twit.post('statuses/update', {status: tweet}, function (err, reply) {
+      if (err) console.log(err);
+      console.log(re)
+    })
   };
 };

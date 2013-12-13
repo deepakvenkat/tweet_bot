@@ -3,15 +3,15 @@ var unirest = require('unirest');
 var WikiQuote = require('./wikiQuote');
 var totalTries = 0;
 
-findQuote = function (callback) {
+findQuote = function (quoteCallback) {
   var movieTitle = pickRandomMovie();
   this.movieTitle = movieTitle;
-  this.callback = callback;
-  getWikiQuote(movieTitile);
+  this.quoteCallback = quoteCallback;
+  getWikiQuote(movieTitle);
 };
 
 pickRandomMovie = function () {
-  var movieList = fs.readFileSync('../data/top250.list', 'utf8');
+  var movieList = fs.readFileSync('./data/top250.list', 'utf8');
   var movies = movieList.toString().split('\n');
   var random = randomNumber(0, (movies.length - 1));
   var movie = movies[random];
@@ -45,7 +45,7 @@ processWikiResponse = function (response) {
     return false;
   } else {
     var quote = wikiQuote.processResponse();
-    return this.callback(quote);
+    return this.quoteCallback(quote);
   }
 };
 
