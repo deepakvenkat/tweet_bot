@@ -19,7 +19,7 @@ var WikiQuote = module.exports = function(response) {
   };
 
   this.processResponse = function() {
-    var $ = cheerio.load(this.page);
+    var $ = this.page;
     var toc = $('.toctext');
     var ids = [];
     var exclusions = ["Dialogue", "Cast", "See Also", "External links"];
@@ -35,6 +35,8 @@ var WikiQuote = module.exports = function(response) {
     var headLine = $('#' + id);
     var headParent = $(headLine).parent();
     var firstQuote = $(headParent).next();
-    return $(firstQuote).text();
+    var quoteText = $(firstQuote).text();
+    var quotes = quoteText.split('.');
+    return quotes[0];
   };
 };

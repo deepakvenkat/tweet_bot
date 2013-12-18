@@ -11,16 +11,17 @@ var Bot = module.exports = function (config) {
   };
 
   this.translateQuote = function (quote) {
-    translator.translate(quote, tweetQuote);
-  };
-
-  this.tweetQuote = function (tweet) {
-    if (tweet.lenghth > 140) {
-      console.log("too long");
-    }
-    this.twit.post('statuses/update', {status: tweet}, function (err, reply) {
-      if (err) console.log(err);
-      console.log(re)
-    })
+    var self = this;
+    translator.translate(quote, function (response) {
+      var tweet = response.body;
+      if (tweet.length > 140) {
+        console.log("tweet too long");
+      } else {
+        var twit = new Twit(config);
+        twit.post('statuses/update', {status: tweet}, function (err, reply) {
+          if (err) console.log(err);
+        });
+      }
+    });
   };
 };

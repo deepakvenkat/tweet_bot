@@ -4,10 +4,9 @@ var WikiQuote = require('./wikiQuote');
 var totalTries = 0;
 
 findQuote = function (quoteCallback) {
-  var movieTitle = pickRandomMovie();
-  this.movieTitle = movieTitle;
-  this.quoteCallback = quoteCallback;
-  getWikiQuote(movieTitle);
+  var title = pickRandomMovie();
+  movieTitle = title;
+  getWikiQuote(movieTitle, quoteCallback);
 };
 
 pickRandomMovie = function () {
@@ -16,7 +15,6 @@ pickRandomMovie = function () {
   var random = randomNumber(0, (movies.length - 1));
   var movie = movies[random];
   movieTitle =  formatMovie(movie);
-  console.log(movieTitle);
   return movieTitle;
 };
 
@@ -28,15 +26,18 @@ randomNumber = function (max, min) {
   return Math.floor(Math.random() * (max - min ) + min);
 };
 
-getWikiQuote = function (movieName) {
+getWikiQuote = function (movieName, quoteCallback) {
   var wikiQuoteUrl = "http://en.wikiquote.org/w/api.php?format=json&action=parse&page=" + movieName;
+  var self = this;
   totalTries++;
   unirest.get(wikiQuoteUrl)
   .headers({'Accept' : 'application/json'})
-  .end(processWikiResponse);
+  .end(function (response) {
+    self.processWikiResponse(response, quoteCallback);
+  });
 };
 
-processWikiResponse = function (response) {
+processWikiResponse = function (response, quoteCallback) {
   var wikiQuote = new WikiQuote(response.body);
   var valid = wikiQuote.isValidResponse();
   if (!valid && totalTries < 4) {
@@ -45,7 +46,8 @@ processWikiResponse = function (response) {
     return false;
   } else {
     var quote = wikiQuote.processResponse();
-    return this.quoteCallback(quote);
+    if (!!quote)
+      quoteCallback(quote);
   }
 };
 
