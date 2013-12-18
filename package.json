@@ -15,7 +15,8 @@
     "node-schedule": "latest",
     "unirest": "latest",
     "cheerio": "latest",
-    "jsdom": "~0.8.9"
+    "jsdom": "~0.8.9",
+    "cron" : "latest"
   },
   "contributors": [
     {
