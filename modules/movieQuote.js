@@ -10,7 +10,7 @@ findQuote = function (quoteCallback) {
 };
 
 pickRandomMovie = function () {
-  var movieList = fs.readFileSync('./data/top250.list', 'utf8');
+  var movieList = fs.readFileSync('./modules/data/top250.list', 'utf8');
   var movies = movieList.toString().split('\n');
   var random = randomNumber(0, (movies.length - 1));
   var movie = movies[random];
@@ -41,7 +41,7 @@ processWikiResponse = function (response, quoteCallback) {
   var wikiQuote = new WikiQuote(response.body);
   var valid = wikiQuote.isValidResponse();
   if (!valid && totalTries < 4) {
-    findQuote();
+    findQuote(quoteCallback);
   } else if (!valid && totalTries > 3){
     return false;
   } else {
