@@ -27,6 +27,7 @@ randomNumber = function (max, min) {
 };
 
 getWikiQuote = function (movieName, quoteCallback) {
+  console.log("Movie: " + movieName + "\n");
   var wikiQuoteUrl = "http://en.wikiquote.org/w/api.php?format=json&action=parse&page=" + movieName;
   var self = this;
   totalTries++;

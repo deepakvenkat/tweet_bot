@@ -22,6 +22,7 @@ var Bot = module.exports = function (config) {
           if (err) console.log(err);
         });
       }
+      console.log("\n=========================\n");
     });
   };
 };
